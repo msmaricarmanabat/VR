@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-@Injectable({ providedIn: 'root'})
+const USER_TOKEN_KEY = 'user-token';
+const HOST_URL_KEY = 'host-url';
+
+@Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
@@ -16,6 +19,7 @@ export class AuthenticationService {
             .then((res: ITokenResult) => {
                 if (res && res.access_token) {
                     this.setToken(res.access_token)
+                    this.setHostUrl(hostUrl);
                     return true;
                 }
                 return false;
@@ -23,11 +27,19 @@ export class AuthenticationService {
     }
 
     setToken(token: string): void {
-        localStorage.setItem('user-token', token);
+        localStorage.setItem(USER_TOKEN_KEY, token);
     }
 
     getToken(): string {
-        return localStorage.getItem('user-token');
+        return localStorage.getItem(USER_TOKEN_KEY);
+    }
+
+    setHostUrl(url: string): void {
+        localStorage.setItem(HOST_URL_KEY, url);
+    }
+
+    getHostUrl(url: string): string {
+        return localStorage.getItem(HOST_URL_KEY);
     }
 }
 
