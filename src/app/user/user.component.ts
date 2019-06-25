@@ -11,6 +11,9 @@ export class UserComponent implements OnInit {
   deals: string[];
   loanDepositFields: string[];
   selected: any;
+  selectedDeal: string;
+  ccrisFields: string[];
+  fields: string[];
 
   constructor(private formBuilder: FormBuilder,
   ) { }
@@ -22,6 +25,7 @@ export class UserComponent implements OnInit {
 
     setTimeout((res) => {
       this.deals = ['Loan Deposit', 'CCRIS'];
+      this.selectedDeal = 'Loan Deposit';
       this.loanDepositFields = ['Counterparty', 'CounterpartyId', 'BussinessUnit', 'ID', 'Status', 'Name',
         'Other Ref', 'Type', 'Product', 'Cash Flow Type', 'Actua/Forecast', 'Depository Ref',
         'ISIN / CUSIP', 'Security', 'Issuer', 'Counterparty Group', 'Broker', 'Provider',
@@ -30,6 +34,12 @@ export class UserComponent implements OnInit {
         'Flow', 'Rate', 'Frequency', 'Capitalising', 'Auto-Roll', 'Provider',
         'Custom Schedule', 'Facility', 'Tranche', 'Repo Eligible', 'Option Status', 'Mirrored Deal'
       ];
+
+      this.ccrisFields = [
+        'Flow', 'Rate', 'Frequency', 'Capitalising', 'Auto-Roll', 'Provider',
+        'Custom Schedule', 'Facility', 'Tranche', 'Repo Eligible', 'Option Status', 'Mirrored Deal'
+      ];
+      this.fields = this.loanDepositFields.sort();
     });
 
   }
@@ -47,5 +57,14 @@ export class UserComponent implements OnInit {
 
   submit() {
     console.log(this.interestFormGroup.value);
+  }
+
+  selectDeal(deal: string) {
+    this.selectedDeal = deal;
+    if (deal === 'Loan Deposit') {
+      this.fields = this.loanDepositFields.sort();
+    } else {
+      this.fields = this.ccrisFields.sort();
+    }
   }
 }

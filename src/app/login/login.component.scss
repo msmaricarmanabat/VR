@@ -1,6 +1,50 @@
 .login-page {
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
+
+    .mat-card {
+        width: 345px;
+    }
+
+    .mat-primary {
+        width: 200px;
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    .side-bg-img {
+        background-image: url('../../assets/images/bg.jpg');
+        height: 100vh;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 75vw;
+        background-position: center;
+    }
+
+    .logo-img {
+        background-image: url('../../assets/images/logo.png');
+        height: 15vh;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 252px;
+        background-position: center;
+    }
+
+    .sub-title {
+        font-size: 17px;
+    }
+
+    .login-form-card {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
+

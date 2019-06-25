@@ -1,7 +1,7 @@
 <header>
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <span>Visual Risk</span>
+        <div class="logo-img"></div>
     </mat-toolbar-row>
   </mat-toolbar>
 </header>
@@ -27,28 +27,28 @@
           </div>
         </div>
         <div class="row">
-          <div class='col-lg-12 m-1'>
-              <mat-label>Deals</mat-label>
+          <div class='col-lg-12 pr-0 my-2'>
+            <mat-checkbox class="example-margin float-left  ml-3" color="primary" (change)="onChange($event)" [value]="deal">All Deals</mat-checkbox>
+            <button mat-button class="btn-small float-right mr-3" color="warn">Clear All</button>
           </div>
-          <div class="col-lg-12 list deal-list">
-            <form [formGroup]="interestFormGroup" (ngSubmit)="submit()">
-              <div *ngFor="let deal of deals; let i = index" class="check-box-panel">
-                <mat-checkbox class="example-margin" color="primary" (change)="onChange($event)" [value]="deal">{{deal}}
-                </mat-checkbox>
-              </div>
-            </form>
+          <div class="col-lg-12 list deal-list pb-2">
+            <div *ngFor="let deal of deals; let i = index" class="deal-checkbox-panel check-box-panel" (click)="selectDeal(deal)" [class.selected]="deal === selectedDeal">
+              <mat-checkbox class="example-margin" color="primary" (change)="onChange($event)" [value]="deal">{{deal}}
+              </mat-checkbox>
+            </div>
           </div>
-        </div> 
+        </div>
       </div>
       <div class="col-lg-6">
         <div class="row">
-          <div class='col-lg-12 m-1'>
-            <mat-label class="headline">List of fields</mat-label>
+          <div class='col-lg-12 pr-0 my-2'>
+            <mat-checkbox class="example-margin float-left  ml-3" color="primary" (change)="onChange($event)" [value]="deal">All {{selectedDeal}} Fields</mat-checkbox>
+            <button mat-button class="btn-small float-right mr-3" color="warn">Clear All</button>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-12 list field-list">
-            <div *ngFor="let field of loanDepositFields; let i = index" class="check-box-panel">
+            <div *ngFor="let field of fields; let i = index" class="check-box-panel">
               <mat-checkbox class="example-margin" color="primary" (change)="onChange($event)" [value]="field">{{field}}
               </mat-checkbox>
             </div>
@@ -56,15 +56,16 @@
         </div>
       </div>
     </div>
-    <div class="row p-5">
-        <div class="col-lg-12">
-          <mat-card-actions class="float-right">
-            <button mat-raised-button (click)="login()" color="primary">Extract</button>
-          </mat-card-actions>
-        </div>
+    <div class="row pt-5 px-3">
+      <div class="col-lg-12">
+        <mat-card-actions class="float-right">
+          <button mat-raised-button (click)="login()" color="primary">Export Excel File</button>
+        </mat-card-actions>
       </div>
+    </div>
   </div>
 </main>
+
 
 <!-- <footer>
   <mat-toolbar>
