@@ -38,7 +38,7 @@ export class AuthenticationService {
         localStorage.setItem(HOST_URL_KEY, url);
     }
 
-    getHostUrl(url: string): string {
+    getHostUrl(): string {
         return localStorage.getItem(HOST_URL_KEY);
     }
 }
