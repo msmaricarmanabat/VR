@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -15,8 +16,8 @@ export class UserComponent implements OnInit {
   ccrisFields: string[];
   fields: string[];
 
-  constructor(private formBuilder: FormBuilder,
-  ) { }
+  constructor(private formBuilder: FormBuilder, private router: Router){}
+  
 
   ngOnInit() {
     this.interestFormGroup = this.formBuilder.group({
@@ -53,6 +54,10 @@ export class UserComponent implements OnInit {
       const i = interests.controls.findIndex(x => x.value === event.source.value);
       interests.removeAt(i);
     }
+  }
+
+  logout() {
+    this.router.navigate(["login"]);
   }
 
   submit() {

@@ -29,7 +29,7 @@
 
     .logo-img {
         background-image: url('../../assets/images/logo.png');
-        height: 15vh;
+        height: 14vh;
         background-repeat: no-repeat;
         background-size: cover;
         width: 252px;
@@ -38,6 +38,18 @@
 
     .sub-title {
         font-size: 17px;
+    }
+
+    .bg-text {
+        position: absolute;
+        top: 15%;
+        color: #ffffffed;
+        text-transform: uppercase;
+        left: 18%;
+        font-size: 4em;
+        text-align: center;
+        right: 16%;
+        font-weight: 100;
     }
 
     .login-form-card {
