@@ -1,0 +1,46 @@
+.main-page {
+    padding: 30px;
+
+    mat-form-field {
+        width: 100%;
+    }
+    
+    .check-box-panel {
+        padding: 5px 10px 0px;
+        border: 1px solid #ecececd9;
+        margin: 5px;
+    }
+    
+    .field-list {
+        max-height: 650px;
+    }
+
+    .deal-list {
+        max-height: 585px;
+    }
+
+    .list {
+        overflow: scroll;
+        overflow-y: visible;
+        overflow-x: hidden;
+    }
+}
+
+//scroll-bar 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    }
+    /* Track */
+::-webkit-scrollbar-track {
+background: #f1f1f1; 
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888; 
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555; 
+}
+
