@@ -18,7 +18,7 @@ export class UserComponent implements OnInit {
     allDealsAreChecked: boolean;
     allFieldsAreChecked: boolean;
     originalDeals: IInstrumentField[];
-    instrumentSettings: IInstrumentSettings[];
+    instrumentSettings: IInstrumentSettings[] = [];
     currentFields: string[] = [];
 
     constructor(private formBuilder: FormBuilder, private router: Router, private vrApi: VRApiService, private authService: AuthenticationService) {
