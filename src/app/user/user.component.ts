@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
         this.settings = {
             startDate: new Date(Date.now()),
             endDate: new Date(Date.now()),
-            deals: []
+            instrumentFields: []
         } as ICompareSettings;
     }
 
@@ -142,12 +142,12 @@ export class UserComponent implements OnInit {
     }
 
     submit() {
-        this.settings.deals = this.instrumentSettings
+        this.settings.instrumentFields = this.instrumentSettings
             .filter(i => i.isChecked)
             .map((i) => {
                 return { fields: i.fields, instrumentType: i.instrumentType } as IInstrumentField;
             });
-        if (!this.settings.deals.length) {
+        if (!this.settings.instrumentFields.length) {
             return;
         }
         this.vrApi.exportDeals(this.settings).subscribe((b) => this.handleExportResponse(b));;
