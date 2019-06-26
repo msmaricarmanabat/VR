@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from './AuthenticationService';
 import { Subscription, Observable } from 'rxjs';
 import { ICompareSettings } from '../models/CompareSettings';
+import { Http, ResponseContentType } from '@angular/http';
 
 @Injectable({ providedIn: 'root' })
 export class VRApiService {
@@ -14,10 +15,10 @@ export class VRApiService {
         return this.http.get(url, { headers });
     }
 
-    exportDeals(settings: ICompareSettings):void{
+    exportDeals(settings: ICompareSettings): Observable<Blob> {
         const headers = this.getDefaultHeader();
         const url = `${this.getBaseUrl()}/api/reconciliationtool/getexcelfile`;
-        this.http.post(url, settings, { headers });
+        return this.http.post(url, settings, { headers, responseType: 'blob' });
     }
 
     private getDefaultHeader(): HttpHeaders {
