@@ -11,6 +11,10 @@ import { UserComponent } from './user/user.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { RouterModule } from '@angular/router';
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/guards/auth.guard';
+import { BlockUIModule } from 'ng-block-ui';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,9 +30,13 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    CustomMaterialModule
+    CustomMaterialModule,
+    BlockUIModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

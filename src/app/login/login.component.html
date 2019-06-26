@@ -1,49 +1,58 @@
 <div class="container-fluid login-page">
-  <div class="row">
-    <div class="col-lg-3">
-    <div class="login-form-card">
-        <mat-card class="example-card">
-            <mat-card-header>
-                <div class="logo-img"></div>
-            </mat-card-header>
-            <span class="sub-title">A Treasury Management System for Digital Treasury</span>
-            <mat-card-content class="mt-4">
-                <form class="example-form">
-                    <table class="full-width" cellspacing="0">
-                        <tr>
-                            <td>
-                                <mat-form-field class="full-width">
-                                    <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
-                                </mat-form-field>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <mat-form-field class="full-width">
-                                    <input matInput placeholder="Host Url" [(ngModel)]="hostUrl" name="hostUrl" required>
-                                </mat-form-field>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <mat-form-field class="full-width">
-                                    <input matInput placeholder="Access Key" [(ngModel)]="accessKey" name="accessKey" required>
-                                </mat-form-field>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-              <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-            </mat-card-content>
-            <mat-card-actions align="middle" class="mb-4">
-              <button mat-raised-button class="full-width" (click)="login()" color="accent">Login</button>
-            </mat-card-actions>
-          </mat-card>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="login-form-card">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <div class="logo-img"></div>
+                    </mat-card-header>
+                    <span class="sub-title">A Treasury Management System for Digital Treasury</span>
+                    <mat-card-content class="mt-4">
+                        <form class="example-form">
+                            <table class="full-width" cellspacing="0">
+                                <tr>
+                                    <td>
+                                        <mat-form-field class="full-width">
+                                            <input matInput placeholder="Username" [(ngModel)]="username"
+                                                name="username" required>
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <mat-form-field class="full-width">
+                                            <input matInput placeholder="Host Url" [(ngModel)]="hostUrl" name="hostUrl"
+                                                required>
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <mat-form-field class="full-width">
+                                            <input matInput placeholder="Access Key" [(ngModel)]="accessKey"
+                                                name="accessKey" required>
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </mat-card-content>
+                    <mat-card-actions align="middle" class="mb-4">
+                        <button mat-raised-button class="full-width" (click)="login()" color="accent">
+                            <mat-icon [hidden]="!isLoading">
+                                <mat-spinner color="primary" diameter="20">
+                                </mat-spinner>
+                            </mat-icon>Login
+                        </button>
+                        <!-- <button mat-raised-button class="full-width" (click)="login()" color="accent">Login</button> -->
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="side-bg-img"></div>
+            <span class="bg-text">it’s that simple. With <strong class="gTreasury-text">GTreasury</strong>, it’s never
+                been easier to gain <strong class="primary">the clarity to act.</strong></span>
+        </div>
     </div>
-    </div>
-    <div class="col-lg-9">
-      <div class="side-bg-img"></div>
-      <span class="bg-text">it’s that simple. With <strong class="gTreasury-text">GTreasury</strong>, it’s never been easier to gain <strong class="primary">the clarity to act.</strong></span>
-    </div>
-  </div>
 </div>

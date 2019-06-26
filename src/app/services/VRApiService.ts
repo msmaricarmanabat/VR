@@ -11,7 +11,7 @@ export class VRApiService {
 
     getFields(): Observable<Object> {
         const headers = this.getDefaultHeader();
-        const url = `${this.getBaseUrl()}/api/reconciliationtool/getfields`;
+        const url = `${this.getBaseUrl()}/api/reconciliationtool/getinstruments`;
         return this.http.get(url, { headers });
     }
 
