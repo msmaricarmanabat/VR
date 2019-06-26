@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { AuthenticationService } from '../services/AuthenticationService';
 @Component({
     selector: 'app-login',
@@ -8,10 +8,10 @@ import { AuthenticationService } from '../services/AuthenticationService';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-    constructor(private router: Router, private authService: AuthenticationService) { }
+    constructor(private router: Router, private authService: AuthenticationService,  private _snackBar: MatSnackBar) { }
     username: string = 'sa';
     hostUrl: string = 'http://localhost';
-    accessKey: string = 'Default';
+    accessKey: string = 'Default'; 
 
     ngOnInit() {
     }
@@ -28,7 +28,9 @@ export class LoginComponent implements OnInit {
                 if (canLogin) {
                     this.router.navigate(["user"]);
                 } else {
-                    alert("Invalid credentials");
+                    this._snackBar.open('There was an error with your credentials combination. Please try again.','', {
+                        duration: 2000,
+                      });
                 }
             });
     }
