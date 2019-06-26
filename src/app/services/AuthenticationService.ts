@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 const USER_TOKEN_KEY = 'user-token';
 const HOST_URL_KEY = 'host-url';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     login(userName: string, hostUrl: string, accessKey: string): Promise<boolean> {
         const headers = new HttpHeaders({
@@ -40,6 +41,11 @@ export class AuthenticationService {
 
     getHostUrl(): string {
         return localStorage.getItem(HOST_URL_KEY);
+    }
+
+    logout(): void{
+        localStorage.clear();
+        this.router.navigate(["login"]);
     }
 }
 
