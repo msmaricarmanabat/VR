@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
+import { VRApiService } from '../services/VRApiService'
+import { IInstrumentField } from '../models/IInstrumentField';
+
 
 @Component({
   selector: 'app-user',
@@ -9,14 +12,14 @@ import { Router } from '@angular/router';
 })
 export class UserComponent implements OnInit {
   interestFormGroup: FormGroup
-  deals: string[];
+  deals: IInstrumentField[];
   loanDepositFields: string[];
   selected: any;
-  selectedDeal: string;
+  selectedDeal: IInstrumentField;
   ccrisFields: string[];
   fields: string[];
 
-  constructor(private formBuilder: FormBuilder, private router: Router){}
+  constructor(private formBuilder: FormBuilder, private router: Router, private vrApi: VRApiService){}
   
 
   ngOnInit() {
@@ -24,36 +27,42 @@ export class UserComponent implements OnInit {
       deals: this.formBuilder.array([])
     });
 
-    setTimeout((res) => {
-      this.deals = ['Loan Deposit', 'CCRIS'];
-      this.selectedDeal = 'Loan Deposit';
-      this.loanDepositFields = ['Counterparty', 'CounterpartyId', 'BussinessUnit', 'ID', 'Status', 'Name',
-        'Other Ref', 'Type', 'Product', 'Cash Flow Type', 'Actua/Forecast', 'Depository Ref',
-        'ISIN / CUSIP', 'Security', 'Issuer', 'Counterparty Group', 'Broker', 'Provider',
-        'Beneficiary', 'Deal Group', 'GL Category', 'Liquidity Code', 'Balance Sheet Code', 'Ccy', 'Amount',
-        'Base Amount', 'Issue Date', 'Deal', 'Start', 'Term', 'End',
-        'Flow', 'Rate', 'Frequency', 'Capitalising', 'Auto-Roll', 'Provider',
-        'Custom Schedule', 'Facility', 'Tranche', 'Repo Eligible', 'Option Status', 'Mirrored Deal'
-      ];
-
-      this.ccrisFields = [
-        'Flow', 'Rate', 'Frequency', 'Capitalising', 'Auto-Roll', 'Provider',
-        'Custom Schedule', 'Facility', 'Tranche', 'Repo Eligible', 'Option Status', 'Mirrored Deal'
-      ];
-      this.fields = this.loanDepositFields.sort();
+    this.vrApi.getFields().subscribe((deals:IInstrumentField[]) => {
+        this.deals = deals || [];
     });
+
+
+
+    // setTimeout((res) => {
+    //   this.deals = ['Loan Deposit', 'CCRIS'];
+    //   this.selectedDeal = 'Loan Deposit';
+    //   this.loanDepositFields = ['Counterparty', 'CounterpartyId', 'BussinessUnit', 'ID', 'Status', 'Name',
+    //     'Other Ref', 'Type', 'Product', 'Cash Flow Type', 'Actua/Forecast', 'Depository Ref',
+    //     'ISIN / CUSIP', 'Security', 'Issuer', 'Counterparty Group', 'Broker', 'Provider',
+    //     'Beneficiary', 'Deal Group', 'GL Category', 'Liquidity Code', 'Balance Sheet Code', 'Ccy', 'Amount',
+    //     'Base Amount', 'Issue Date', 'Deal', 'Start', 'Term', 'End',
+    //     'Flow', 'Rate', 'Frequency', 'Capitalising', 'Auto-Roll', 'Provider',
+    //     'Custom Schedule', 'Facility', 'Tranche', 'Repo Eligible', 'Option Status', 'Mirrored Deal'
+    //   ];
+
+    //   this.ccrisFields = [
+    //     'Flow', 'Rate', 'Frequency', 'Capitalising', 'Auto-Roll', 'Provider',
+    //     'Custom Schedule', 'Facility', 'Tranche', 'Repo Eligible', 'Option Status', 'Mirrored Deal'
+    //   ];
+    //   this.fields = this.loanDepositFields.sort();
+    // });
 
   }
 
   onChange(event) {
-    const interests = <FormArray>this.interestFormGroup.get('interests') as FormArray;
+    // const interests = <FormArray>this.interestFormGroup.get('interests') as FormArray;
 
-    if (event.checked) {
-      interests.push(new FormControl(event.source.value))
-    } else {
-      const i = interests.controls.findIndex(x => x.value === event.source.value);
-      interests.removeAt(i);
-    }
+    // if (event.checked) {
+    //   interests.push(new FormControl(event.source.value))
+    // } else {
+    //   const i = interests.controls.findIndex(x => x.value === event.source.value);
+    //   interests.removeAt(i);
+    // }
   }
 
   logout() {
@@ -64,12 +73,13 @@ export class UserComponent implements OnInit {
     console.log(this.interestFormGroup.value);
   }
 
-  selectDeal(deal: string) {
+  selectDeal(deal: IInstrumentField) {
     this.selectedDeal = deal;
-    if (deal === 'Loan Deposit') {
-      this.fields = this.loanDepositFields.sort();
-    } else {
-      this.fields = this.ccrisFields.sort();
-    }
+    this.fields = deal.fields;
+    // if (deal === 'Loan Deposit') {
+    //   this.fields = this.loanDepositFields.sort();
+    // } else {
+    //   this.fields = this.ccrisFields.sort();
+    // }
   }
 }

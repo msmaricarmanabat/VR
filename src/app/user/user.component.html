@@ -34,7 +34,7 @@
           </div>
           <div class="col-lg-12 list deal-list pb-2">
             <div *ngFor="let deal of deals; let i = index" class="deal-checkbox-panel check-box-panel" (click)="selectDeal(deal)" [class.selected]="deal === selectedDeal">
-              <mat-checkbox class="example-margin" color="primary" (change)="onChange($event)" [value]="deal">{{deal}}
+              <mat-checkbox class="example-margin" color="primary" (change)="onChange($event)" [value]="deal">{{deal.instrumentType}}
               </mat-checkbox>
             </div>
           </div>
