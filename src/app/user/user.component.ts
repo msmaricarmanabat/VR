@@ -5,6 +5,7 @@ import { VRApiService } from '../services/VRApiService'
 import { IInstrumentField } from '../models/IInstrumentField';
 import { AuthenticationService } from '../services/AuthenticationService';
 import { ICompareSettings } from '../models/CompareSettings';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
     selector: 'app-user',
@@ -12,6 +13,8 @@ import { ICompareSettings } from '../models/CompareSettings';
     styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+    @BlockUI() blockUI: NgBlockUI;
+
     interestFormGroup: FormGroup;
     selectedDeal: IInstrumentSettings;
     settings: ICompareSettings;
@@ -30,6 +33,7 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit() {
+       this.blockUI.start();
         this.interestFormGroup = this.formBuilder.group({
             deals: this.formBuilder.array([])
         });
@@ -48,7 +52,7 @@ export class UserComponent implements OnInit {
         if (this.selectedDeal) {
             const target = this.instrumentSettings.find(i => i.instrumentType === this.selectedDeal.instrumentType);
             const originalDeal = this.originalDeals.find(d => d.instrumentType === this.selectedDeal.instrumentType);
-            return target && target.fields.length === originalDeal.fields.length;
+            return target && target.instrumentFields.length === originalDeal.fields.length;
         }
         return false;
     }
@@ -62,7 +66,7 @@ export class UserComponent implements OnInit {
         if (this.selectedDeal) {
             const target = this.instrumentSettings.find(i => i.instrumentType === this.selectedDeal.instrumentType);
             if (target) {
-                const included = !!target.fields.find(f => f === field);
+                const included = !!target.instrumentFields.find(f => f === field);
                 return included;
             }
         }
@@ -85,7 +89,7 @@ export class UserComponent implements OnInit {
         const target = this.instrumentSettings.find(i => i.instrumentType === this.selectedDeal.instrumentType);
         const originalDeal = this.originalDeals.find(d => d.instrumentType === this.selectedDeal.instrumentType)
         if (target) {
-            target.fields = this.allFieldsAreChecked ? [...originalDeal.fields] : [];
+            target.instrumentFields = this.allFieldsAreChecked ? [...originalDeal.fields] : [];
         }
     }
 
@@ -110,15 +114,15 @@ export class UserComponent implements OnInit {
         const setting = this.instrumentSettings.find(i => i.instrumentType === this.selectedDeal.instrumentType);
 
         if (event.checked) {
-            const field = setting.fields.find(f => f === target);
+            const field = setting.instrumentFields.find(f => f === target);
             if (!field) {
-                setting.fields.push(target);
+                setting.instrumentFields.push(target);
             }
             this.allFieldsAreChecked = this.areDealFieldsAllIncluded();
         } else {
-            const field = setting.fields.find(f => f === target);
+            const field = setting.instrumentFields.find(f => f === target);
             if (field) {
-                setting.fields = setting.fields.filter(f => f !== target);
+                setting.instrumentFields = setting.instrumentFields.filter(f => f !== target);
             }
             this.allFieldsAreChecked = false;
         }
@@ -132,7 +136,7 @@ export class UserComponent implements OnInit {
     excludeAllDealFields() {
         const target = this.instrumentSettings.find(i => i.instrumentType === this.selectedDeal.instrumentType);
         if (target) {
-            target.fields = [];
+            target.instrumentFields = [];
         }
         this.allFieldsAreChecked = false;
     }
@@ -142,15 +146,20 @@ export class UserComponent implements OnInit {
     }
 
     submit() {
+       this.blockUI.start();
         this.settings.instrumentFields = this.instrumentSettings
             .filter(i => i.isChecked)
             .map((i) => {
-                return { fields: i.fields, instrumentType: i.instrumentType } as IInstrumentField;
+                return { fields: i.instrumentFields, instrumentType: i.instrumentType } as IInstrumentField;
             });
         if (!this.settings.instrumentFields.length) {
             return;
         }
-        this.vrApi.exportDeals(this.settings).subscribe((b) => this.handleExportResponse(b));;
+        this.vrApi.exportDeals(this.settings).subscribe((b) => {
+            this.handleExportResponse(b);    
+            this.blockUI.stop();
+          }
+        );
     }
 
     selectDeal(deal: IInstrumentSettings) {
@@ -170,11 +179,18 @@ export class UserComponent implements OnInit {
                     this.instrumentSettings = [];
                     return;
                 }
-                this.originalDeals = deals;
+                this.originalDeals = deals;            
                 this.instrumentSettings = deals.map((deal) => {
-                    return { isChecked: false, instrumentType: deal.instrumentType, fields: [] } as IInstrumentSettings;
+                    return { isChecked: false, instrumentType: deal.instrumentType, instrumentFields: [] } as IInstrumentSettings;
                 })
+
+                this.selectDeal(this.instrumentSettings[0]);
+                this.blockUI.stop();
             });
+    }
+
+    isEnabled() {
+      return this.instrumentSettings.some(c => c.isChecked === true);
     }
 
     handleExportResponse(blob: Blob): void {
@@ -210,5 +226,5 @@ export class UserComponent implements OnInit {
 export interface IInstrumentSettings {
     isChecked: boolean;
     instrumentType: string;
-    fields: string[];
+    instrumentFields: string[];
 }
