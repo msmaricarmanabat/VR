@@ -30,7 +30,7 @@
           </div>
           <div class="row">
             <div class='col-lg-12 pr-0 my-2'>
-              <mat-checkbox class="example-margin float-left  ml-3" color="primary" (change)="onSelectAllDealsChange($event)" [value]="deal"  [checked]="allDealsAreChecked">All Deals</mat-checkbox>
+              <mat-checkbox class="example-margin float-left  ml-3" color="primary" (change)="onSelectAllDealsChange($event)" [checked]="allDealsAreChecked">All Deals</mat-checkbox>
               <button mat-button class="btn-small float-right mr-3" color="warn"  (click)="excludeAllDeals()">Clear All</button>
             </div>
             <div class="col-lg-12 list deal-list pb-2">
